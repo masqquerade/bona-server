@@ -20,7 +20,7 @@ func NewRouter() *Router {
 	return &Router{}
 }
 
-func (r *Router) NewRoute(p string, h types.NextFunc, m ...types.Middleware) {
+func (r *Router) On(p string, h types.NextFunc, m ...types.Middleware) {
 	newRoute := Route{
 		Middlewares: m,
 		Handler:     h,

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bonaserver/pkg/middleware"
 	"bonaserver/pkg/router"
 	"bonaserver/pkg/store"
 	"net/http"
@@ -24,7 +25,13 @@ func (s *Server) InitServer() *http.ServeMux {
 	s.mux = http.NewServeMux()
 	s.Router = router.NewRouter()
 
+	s.Router.On("/api/set-img", s.SetImgHandler, middleware.SetCorsAuthHeadersMiddleware, middleware.AuthUserMiddleware)
+
 	s.Router.InitRoutes(s.mux)
 
 	return s.mux
+}
+
+func (s *Server) SetImgHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("server side"))
 }

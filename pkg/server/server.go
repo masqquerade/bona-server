@@ -1,7 +1,6 @@
 package server
 
 import (
-	"bonaserver/pkg/middleware"
 	"bonaserver/pkg/router"
 	"bonaserver/pkg/store"
 	"net/http"
@@ -25,10 +24,7 @@ func (s *Server) InitServer() *http.ServeMux {
 	s.mux = http.NewServeMux()
 	s.Router = router.NewRouter()
 
-	s.Router.InitRoutes()
-	s.mux.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
-		middleware.SpawnMiddlewaresChain(&s.Router.Routes[0], r, w)
-	})
+	s.Router.InitRoutes(s.mux)
 
 	return s.mux
 }
